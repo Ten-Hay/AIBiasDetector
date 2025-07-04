@@ -12,6 +12,8 @@ The model that I used was Random Forest Classifier. I felt this was the most sui
 
 The dataset that was provided was a table of loan approval data which contained many applicants and their data and whether or not they had been approved or denied. This data had a lot of sensitive attributes that are commonly biased against including race, gender, and citizenship status just to name a few.
 
+# Link to Video Submission
+https://youtu.be/fmtwx8SDwzg
 
 # Setup
 
@@ -26,7 +28,7 @@ cd AIBiasDetector
 python -m venv venv
 source venv/bin/activate
 ```
-### Instal dependencies
+### Install dependencies
 ```
 pip install pandas scikit-learn matplotlib seaborn shap fairlearn
 ```
