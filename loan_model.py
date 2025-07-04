@@ -26,35 +26,6 @@ X = pd.get_dummies(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_size=0.2)
 
-'''
-#Hyperparamter Tunning
-rfTuner = RandomForestClassifier(random_state=1)
-
-#Possible Parameters:
-param_grid = {
-    'n_estimators': [100, 500, 1000],          
-    'criterion': ['gini', 'entropy'],     
-    'min_samples_split': [2, 5, 10],        
-    'max_depth': [None, 10, 20, 30],         
-    'min_samples_leaf': [1, 2, 4]            
-}
-
-grid_search = GridSearchCV(
-    estimator=rfTuner,
-    param_grid=param_grid,
-    cv=5,              
-    scoring='accuracy', 
-    n_jobs=-1,          
-    verbose=2         
-)
-
-
-grid_search.fit(X_train, y_train)
-
-print("Hyperparameters:", grid_search.best_params_)
-print("Accuracy:", grid_search.best_score_)
-'''
-
 #Labeling Sensitive Features
 sensitive_features = ["Gender", "Race", "Employment_Type", "Education_Level", 
                       'Citizenship_Status', 'Language_Proficiency', 
@@ -89,6 +60,34 @@ for feature in sensitive_features:
     plt.savefig(filename)
     plt.close()
 
+'''
+#Hyperparamter Tunning
+rfTuner = RandomForestClassifier(random_state=1)
+
+#Possible Parameters:
+param_grid = {
+    'n_estimators': [100, 500, 1000],          
+    'criterion': ['gini', 'entropy'],     
+    'min_samples_split': [2, 5, 10],        
+    'max_depth': [None, 10, 20, 30],         
+    'min_samples_leaf': [1, 2, 4]            
+}
+
+grid_search = GridSearchCV(
+    estimator=rfTuner,
+    param_grid=param_grid,
+    cv=5,              
+    scoring='accuracy', 
+    n_jobs=-1,          
+    verbose=2         
+)
+
+
+grid_search.fit(X_train, y_train)
+
+print("Hyperparameters:", grid_search.best_params_)
+print("Accuracy:", grid_search.best_score_)
+'''
 
 
 #Creating Model With Updated Hyperparameters
@@ -196,11 +195,14 @@ for feature in sensitive_features:
             palette=color_map,
             ax=ax
         )
+        
+        #Setup graph
         ax.set_title(f"{metric_name.replace('_', ' ').title()} by {feature}")
         ax.set_xlabel(feature)
         ax.set_ylabel(metric_name.replace('_', ' ').title())
         ax.tick_params(axis='x', rotation=45)
         
+        #Set threshold
         ax.axhline(threshold, ls='--', color='gray', label=f"Threshold ({threshold:.2f})")
         ax.legend()
     
